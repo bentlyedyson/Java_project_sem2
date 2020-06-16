@@ -4,15 +4,20 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Window_2 extends JFrame {
+	static String username2;
+	//variable 
+	private javax.swing.JLabel label2;
+	private static javax.swing.JTextArea display2;
+	private javax.swing.JButton send2;
+	public static javax.swing.JTextArea text2;
 	
-	static String username2;// this will be the second username of the first window
 	private JPanel contentPane;
 
 	/**
@@ -34,11 +39,7 @@ public class Window_2 extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	private javax.swing.JLabel Label_2;
-	private static javax.swing.JTextArea Screen_2;
-	private javax.swing.JButton Send_2;
-	public static javax.swing.JTextArea Chat_2;
-	
+	//constructor
 	public Window_2() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 385, 421);
@@ -47,52 +48,53 @@ public class Window_2 extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		Label_2 = new JLabel("Chat window for: " + username2);
-		Label_2.setBounds(10, 10, 255, 30);
-		contentPane.add(Label_2);
+		display2 = new JTextArea();
+		display2.setBounds(10, 44, 351, 279);
+		contentPane.add(display2);
 		
-		Chat_2 =new JTextArea();
-		Chat_2.setBounds(10, 330, 255, 44);
-		contentPane.add(Chat_2);
+		text2 = new JTextArea();
+		text2.setBounds(10, 333, 277, 41);
+		contentPane.add(text2);
 		
-		Send_2 = new JButton("Send");
-		Send_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String s = Chat_2.getText();
+		send2 = new JButton("SEND");
+		send2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String s = text2.getText();
 				if(s.equals("")) {
 					return;
 				}
-				Screen_2.append(username2 + ": " + s + "\n");
-				Window_1.Send_Text();
-				Chat_2.setText("");
-			}
+				display2.append(username2 + ": " + s + "\n");
+				Window_1.sendText();
+				text2.setText("");
+				}
+	// this function above get the text from the field where we type and put it in a String
+	// if it's empty, the program does nothing 
+	// if not empty, the code runs, append the text in our own display and then pass the text to the window_2
+	// set text1 to empty, so the messages box is clear when we send it 
 		});
+		send2.setBounds(297, 335, 64, 39);
+		contentPane.add(send2);
 		
-		Send_2.setBounds(275, 332, 86, 42);
-		contentPane.add(Send_2);
-		
-		Screen_2 = new JTextArea();
-		Screen_2.setBounds(10, 47, 351, 262);
-		contentPane.add(Screen_2);
-	
-		
-		JButton Clear = new JButton("Clear");
-		Clear.addActionListener(new ActionListener() {
+		JButton clear = new JButton("CLEAR");
+		clear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Screen_2.setText("");
+				display2.setText("");
 			}
 		});
-		Clear.setBounds(276, 6, 85, 21);
-		contentPane.add(Clear);
+		// this above code is to set the text in the text box to be cleared when it's pressed
+		clear.setBounds(276, 13, 85, 21);
+		contentPane.add(clear);
+		
+		label2 = new JLabel("Chat window for: " + username2);
+		label2.setBounds(10, 10, 261, 24);
+		contentPane.add(label2);
 	}
-	
-	public static void Send_Text() { 
-		String s = Window_1.Chat_1.getText(); //when user type something in the Window_1 Screen, it will display later in Window_2
-		if(s.equals("")) { // check if the s is empty, the program will do nothing
-			return;
-		}// but if, this will add or append to the other window if it detect texts
-		Screen_2.append(Window_1.username1 + ":" + s + "\n" ) ;
-	}
-	
 
+	public static void sendText() {
+		String s = Window_1.text1.getText(); // this code makes new String and get the text from Window_2, when you type something in the Window_2 text area, it will display what it written there
+		if(s.equals("")) {//if it is empty or nothing, it returns means doesn't do anything, if not empty
+			return;
+		}
+		display2.append(Window_1.username1 + ": " + s + "\n");//append or add the text to other window 
+		}
 }
